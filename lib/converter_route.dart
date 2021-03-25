@@ -43,9 +43,9 @@ class _ConverterRouteState extends State<ConverterRoute> {
         color: widget.color,
         child: Column(
           children: [
-            Text(units[index].name + "Unit $index",
+            Text(units[index].name + " Unit $index",
             style: Theme.of(context).textTheme.headline,),
-            Text("Conversion $index",
+            Text("Conversion: " + units[index].conversion.toString(),
               style: Theme.of(context).textTheme.subhead
               ,
             ),
