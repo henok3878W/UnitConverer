@@ -9,15 +9,17 @@ import 'unit.dart';
 
 final _backgroundColor = Colors.green[100];
 
-/// Category Route (screen).
-///
-/// This is the 'home' screen of the Unit Converter. It shows a header and
-/// a list of [Categories].
-///
-/// While it is named CategoryRoute, a more apt name would be CategoryScreen,
-/// because it is responsible for the UI at the route's destination.
-class CategoryRoute extends StatelessWidget {
-  const CategoryRoute();
+class CategoryRoute extends StatefulWidget {
+
+
+
+  @override
+  _CategoryRouteState createState() => _CategoryRouteState();
+}
+
+class _CategoryRouteState extends State<CategoryRoute> {
+
+  List<Category> categories = <Category>[];
 
   static const _categoryNames = <String>[
     'Length',
@@ -41,57 +43,47 @@ class CategoryRoute extends StatelessWidget {
     Colors.red,
   ];
 
-  /// Makes the correct number of rows for the list view.
-  ///
-  /// For portrait, we use a [ListView].
-  Widget _buildCategoryWidgets(List<Widget> categories) {
-    return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => categories[index],
-      itemCount: categories.length,
-    );
+  @override
+  void initState() {
+    super.initState();
+    for(int i = 0; i < _categoryNames.length;i++){
+      categories.add(
+          Category(
+       name: _categoryNames[i],
+        units: _retrieveCategoryUnits(_categoryNames[i]),
+        color: _baseColors[i],
+        iconLocation: Icons.cake,
+      ));
+
+    }
   }
 
-  /// Returns a list of mock [Unit]s.
-  List<Unit> _retrieveUnitList(String categoryName) {
-    return List.generate(10, (int i) {
-      i += 1;
-      return Unit(
-        name: '$categoryName Unit $i',
-        conversion: i.toDouble(),
-      );
-    });
+  List<Unit> _retrieveCategoryUnits(String categoryName){
+    return List.generate(10, (index) => new Unit(name: categoryName,conversion: index.toDouble()));
+  }
+
+  ListView _buildCategoryLists(List<Widget> categories){
+    return ListView.builder(itemBuilder: (context,index){
+      return categories[index];
+    },itemCount: categories.length,);
+
   }
 
   @override
   Widget build(BuildContext context) {
-    final categories = <Category>[];
-
-    for (var i = 0; i < _categoryNames.length; i++) {
-      categories.add(Category(
-        name: _categoryNames[i],
-        color: _baseColors[i],
-        iconLocation: Icons.cake,
-        units: _retrieveUnitList(_categoryNames[i]),
-      ));
-    }
-
     final listView = Container(
+      padding: EdgeInsets.symmetric(horizontal: 8),
       color: _backgroundColor,
-      padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: _buildCategoryWidgets(categories),
+      child: _buildCategoryLists(categories),
     );
 
     final appBar = AppBar(
-      elevation: 0.0,
-      title: Text(
-        'Unit Converter',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 30.0,
-        ),
-      ),
-      centerTitle: true,
+      elevation: 0,
+      title: Text('Unit converter',
+        style: TextStyle(color: Colors.black, fontSize: 30
+        ),),
       backgroundColor: _backgroundColor,
+      centerTitle: true,
     );
 
     return Scaffold(
