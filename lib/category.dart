@@ -6,8 +6,9 @@
 // https://www.dartlang.org/guides/language/effective-dart/style#ordering
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:task_02_category_widget/converter_route.dart';
-import 'unit.dart';
+import 'package:task_02_category_widget/models/unit.dart';
+import 'screens/converter_route.dart';
+
 
 /// A custom [Category] widget.
 ///

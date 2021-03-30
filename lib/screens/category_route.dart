@@ -3,9 +3,11 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:task_02_category_widget/category.dart';
+import 'package:task_02_category_widget/models/unit.dart';
+import 'package:task_02_category_widget/widgets/sample_widget.dart';
 
-import 'category.dart';
-import 'unit.dart';
+
 
 final _backgroundColor = Colors.green[100];
 
@@ -59,11 +61,15 @@ class _CategoryRouteState extends State<CategoryRoute> {
   }
 
   List<Unit> _retrieveCategoryUnits(String categoryName){
-    return List.generate(10, (index) => new Unit(name: categoryName,conversion: index.toDouble()));
+    return List.generate(10, (index){
+      index++;
+      return new Unit(name: categoryName +" " +index.toString(),conversion: index.toDouble());}
+      );
   }
 
   ListView _buildCategoryLists(List<Widget> categories){
-    return ListView.builder(itemBuilder: (context,index){
+    return ListView.builder(
+      itemBuilder: (context,index){
       return categories[index];
     },itemCount: categories.length,);
 
